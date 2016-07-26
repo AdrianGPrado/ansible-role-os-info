@@ -1,0 +1,40 @@
+galaxy_info:
+  author: Adrian Prado
+  description: your description
+
+  license: license (MIT, BSD)
+
+  min_ansible_version: 1.9
+
+  platforms:
+  - name: EL
+   versions:
+   - all
+   - 6
+   - 7
+   - Atomic
+  - name: GenericUNIX
+   versions:
+   - all
+  - name: Fedora
+   versions:
+   - 22
+   - 23
+  - name: Ubuntu
+   versions:
+   - all
+   - lucid
+  - name: Debian
+   versions:
+   - all
+   - etch
+   - jessie
+  - name: CoreOS
+  versions:
+  - stable
+
+
+  galaxy_tags:
+    - system
+
+dependencies: []
