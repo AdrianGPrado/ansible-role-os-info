@@ -1,0 +1,10 @@
+---
+
+# Fedora >=22 comes with Python3 installed and not python2 this will cause an
+# error in case of using some Ansible modules which require python2.
+- name: Install python2 minimal packages
+  raw: dnf install -y {{ item }}
+  with_items:
+    - python # everyone need python2
+    - python-dnf # some versions of ansible (2.0) use dnf directly
+    - libselinux-python
