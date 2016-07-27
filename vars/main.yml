@@ -1,0 +1,4 @@
+---
+# vars file for ansible-role-os-info
+pypy_download_url_base: "https://bitbucket.org/pypy/pypy/downloads"
+pypy_download_url: "{{ pypy_download_url_base }}/pypy-{{ pypy_version }}-linux64.tar.bz2"

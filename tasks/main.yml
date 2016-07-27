@@ -1,0 +1,69 @@
+---
+- name: Get os_version from /etc/os-release
+  raw: "grep '^VERSION_ID=' /etc/os-release | sed s'/VERSION_ID=//'"
+  register: os_version
+  always_run: yes
+
+- name: Get distro name from /etc/os-release
+  raw: "grep '^NAME=' /etc/os-release | sed s'/NAME=//'"
+  register: distro
+  always_run: yes
+
+# --- CoreOS ---
+- name: Init the is_coreos fact
+  set_fact:
+    is_coreos: false
+
+- name: Set the is_coreos fact
+  set_fact:
+    is_coreos: true
+  when: "'CoreOS' in distro.stdout"
+
+- name: Set the bin directory path for CoreOS
+  set_fact:
+    bin_dir: "/opt/bin"
+  when: is_coreos
+
+- include: coreos.yml
+  when: is_coreos
+
+# --- CentOS/Fedora Atomic OS's ---
+- name: Determine if Atomic
+  raw: "test -f /run/ostree-booted"
+  register: os_tree_check
+  changed_when: false
+  failed_when: false
+
+- name: Init the is_atomic fact
+  set_fact:
+    is_atomic: false
+
+- name: Set the is_atomic fact
+  set_fact:
+    is_atomic: true
+  when: os_tree_check.rc == 0
+
+# --- Fedora >= 22 python2 instalation ---
+- include: fedora-dnf.yml
+  when: os_version.stdout|int >= 22 and 'Fedora' in distro.stdout and not is_atomic
+
+# --- General Linux distr. Determine if it uses rpm ---
+- name: Determine if has rpm
+  raw: "which rpm"
+  register: rpm_check
+  changed_when: false
+  always_run: yes
+  failed_when: rpm_check.stdout_lines == ""
+
+- name: Init the has_rpm fact
+  set_fact:
+    has_rpm: false
+
+- name: Set the has_rpm fact
+  set_fact:
+    has_rpm: true
+  when: "'/bin/rpm' in rpm_check.stdout"
+
+# collect information about what packages are installed
+- include: rpm.yml
+  when: has_rpm

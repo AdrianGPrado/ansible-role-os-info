@@ -29,9 +29,18 @@ The default python version for _CoreOS_ is 2.4.0. This can be changed with the v
 
     pypy_version: 2.x.y
 
-Please remember that some Ansible modules might not work with [Python 3](https://docs.ansible.com/ansible/developing_modules_python3.html).
+Please remember that some Ansible modules might not work with Python 3.
 
-# Dependencies
+From [Ansible Documentation](https://docs.ansible.com/ansible/developing_modules_python3.html):
+
+_Porting Modules to Python 3
+Ansible modules are not the usual Python-3 porting exercise. There are two factors that make it harder to port them than most code:
+
+Many modules need to run on Python-2.4 in addition to Python-3.
+A lot of mocking has to go into unittesting a Python-3 module. So it’s harder to test that your porting has fixed everything or to make sure that later commits haven’t regressed._
+
+Dependencies
+------------
 
 No Dependencies.
 
