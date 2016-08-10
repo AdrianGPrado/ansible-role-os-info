@@ -2,8 +2,6 @@
 
 [![Build Status](https://travis-ci.org/AdrianGPrado/ansible-role-os-info.svg?branch=master)](https://travis-ci.org/AdrianGPrado/ansible-role-os-info)
 
-
-
 Gathers information related to the OS, and determine if it is one of the following:
   - Centos
   - Fedora
